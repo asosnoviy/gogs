@@ -166,6 +166,8 @@ func Issues(ctx *context.Context) {
 	pager := paginater.New(total, setting.UI.IssuePagingNum, page, 5)
 	ctx.Data["Page"] = pager
 
+	SearchStrg := ctx.Query("search")
+
 	issues, err := models.Issues(&models.IssuesOptions{
 		UserID:      uid,
 		AssigneeID:  assigneeID,
@@ -178,6 +180,7 @@ func Issues(ctx *context.Context) {
 		IsPull:      isPullList,
 		Labels:      selectLabels,
 		SortType:    sortType,
+		Search:      SearchStrg,
 	})
 	if err != nil {
 		ctx.Handle(500, "Issues", err)

@@ -809,6 +809,7 @@ type IssuesOptions struct {
 	IsPull      bool
 	Labels      string
 	SortType    string
+	Search      string
 }
 
 // Issues returns a list of issues by given conditions.
@@ -874,6 +875,12 @@ func Issues(opts *IssuesOptions) ([]*Issue, error) {
 			sess.And("issue_user.uid = ?", opts.UserID)
 		}
 	}
+
+	// serach start
+	if len(opts.Search) > 0 {
+		sess.And("issue.name LIKE ?", "%"+opts.Search+"%")
+	}
+	// serach end
 
 	issues := make([]*Issue, 0, setting.UI.IssuePagingNum)
 	if err := sess.Find(&issues); err != nil {

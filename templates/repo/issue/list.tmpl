@@ -23,6 +23,21 @@
 				{{.i18n.Tr "repo.issues.close_tab" .IssueStats.ClosedCount}}
 			</a>
 		</div>
+		<!-- search -->
+		{{if .PageIsIssueList}}
+			<div class="ui right">
+				<form action="{{.RepoLink}}/issues">
+						<div class="ui tiny search input">
+							<input name="search" placeholder="{{.i18n.Tr "explore.search"}}" value="{{.Keyword}}">
+						    <input name="state" value="{{.State}}" hidden>
+							<input name="labels" value="{{.SelectLabels}}" hidden>
+							<input name="milestone" value="{{.MilestoneID}}" hidden>
+							<input name="assignee" value="{{.AssigneeID}}" hidden>
+						</div>
+						<button class="ui black tiny button" data-panel="#add-deploy-key-panel">{{.i18n.Tr "explore.search"}}</button>
+				</form>
+			</div>	
+		{{end}}
 		<div class="ui right floated secondary filter menu">
 			<!-- Label -->
 			<div class="ui {{if not .Labels}}disabled{{end}} dropdown jump item">
