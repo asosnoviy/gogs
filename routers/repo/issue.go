@@ -236,6 +236,7 @@ func Issues(ctx *context.Context) {
 	ctx.Data["MilestoneID"] = milestoneID
 	ctx.Data["AssigneeID"] = assigneeID
 	ctx.Data["IsShowClosed"] = isShowClosed
+	ctx.Data["SearchStrg"] = SearchStrg
 	if isShowClosed {
 		ctx.Data["State"] = "closed"
 	} else {
