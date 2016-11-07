@@ -142,6 +142,7 @@ func Issues(ctx *context.Context) {
 	selectLabels := ctx.Query("labels")
 	milestoneID := ctx.QueryInt64("milestone")
 	isShowClosed := ctx.Query("state") == "closed"
+	SearchStrg := ctx.Query("search")
 	issueStats := models.GetIssueStats(&models.IssueStatsOptions{
 		RepoID:      repo.ID,
 		UserID:      uid,
@@ -150,6 +151,7 @@ func Issues(ctx *context.Context) {
 		AssigneeID:  assigneeID,
 		FilterMode:  filterMode,
 		IsPull:      isPullList,
+		Search:      SearchStrg,
 	})
 
 	page := ctx.QueryInt("page")
@@ -165,8 +167,6 @@ func Issues(ctx *context.Context) {
 	}
 	pager := paginater.New(total, setting.UI.IssuePagingNum, page, 5)
 	ctx.Data["Page"] = pager
-
-	SearchStrg := ctx.Query("search")
 
 	issues, err := models.Issues(&models.IssuesOptions{
 		UserID:      uid,
