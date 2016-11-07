@@ -1101,6 +1101,7 @@ type IssueStatsOptions struct {
 	AssigneeID  int64
 	FilterMode  int
 	IsPull      bool
+	Search      string
 }
 
 // GetIssueStats returns issue statistic information by given conditions.
@@ -1124,6 +1125,12 @@ func GetIssueStats(opts *IssueStatsOptions) *IssueStats {
 		if opts.AssigneeID > 0 {
 			sess.And("assignee_id = ?", opts.AssigneeID)
 		}
+
+		// serach start
+		if len(opts.Search) > 0 {
+			sess.And("issue.name LIKE ?", "%"+opts.Search+"%")
+		}
+		// serach end
 
 		return sess
 	}
