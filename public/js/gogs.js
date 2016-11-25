@@ -1047,7 +1047,7 @@ function initAdmin() {
 
 function buttonsClickOnEnter() {
     $('.ui.button').keypress(function (e) {
-        if (e.keyCode == 13 || e.keyCode == 32) // enter key or space bar
+        if (e.keyCode === 13 || e.keyCode === 32) // enter key or space bar
             $(this).click();
     });
 }
@@ -1171,7 +1171,7 @@ function initCodeView() {
             deSelect();
         });
 
-        $(window).on('hashchange', function (e) {
+        $(window).on('hashchange', function () {
             var m = window.location.hash.match(/^#(L\d+)\-(L\d+)$/);
             var $list = $('.code-view ol.linenums > li');
             var $first;
@@ -1190,6 +1190,48 @@ function initCodeView() {
         }).trigger('hashchange');
     }
 }
+
+function initCommitView() {
+    if ($('.file-code table').length > 0) {
+        $(document).on('click', '.lines-num span', function (e) {
+            var $select = $(this);
+        // TODO 
+        // LAB
+        // rangeSelect    
+        //    var $list = $select.parent().parent().siblings('tr').find('lines-code > td');
+              var $list = $select.parent().parent().siblings('tr');
+        //    selectRange($list, $list.filter('[rel=' + $select.attr('id') + ']'), (e.shiftKey ? $list.filter('.active').eq(0) : null));
+        //    deSelect();
+              $list.removeClass('active');
+              $select.parent().parent().addClass('active'); 
+              changeHash('#' + $select.attr('id'));
+        });
+
+         $(window).on('hashchange', function () {
+              var m = window.location.hash.match(/^#(.*)/);
+              $("#"+m[1]).parent().parent().addClass('active');
+           
+            
+        //     var m = window.location.hash.match(/^#(L\d+)\-(L\d+)$/);
+        //     // var $list = $('.file-code ol.linenums > li');
+        //     var $list = $select.parent().parent().siblings('tr');
+        //     var $first;
+        //     if (m) {
+        //         $first = $list.filter('.' + m[1]);
+        //         selectRange($list, $first, $list.filter('.' + m[2]));
+        //         $("html, body").scrollTop($first.offset().top - 200);
+        //         return;
+        //     }
+        //     m = window.location.hash.match(/^#(L\d+)$/);
+        //     if (m) {
+        //         $first = $list.filter('.' + m[1]);
+        //         selectRange($list, $first);
+        //         $("html, body").scrollTop($first.offset().top - 200);
+        //     }
+         }).trigger('hashchange');
+    }
+}
+
 
 $(document).ready(function () {
     csrf = $('meta[name=_csrf]').attr("content");
@@ -1235,7 +1277,7 @@ $(document).ready(function () {
     });
 
     // Highlight JS
-    if (typeof hljs != 'undefined') {
+    if (typeof hljs !== 'undefined') {
         hljs.initHighlightingOnLoad();
     }
 
@@ -1312,7 +1354,7 @@ $(document).ready(function () {
         $('.delete.modal').modal({
             closable: false,
             onApprove: function () {
-                if ($this.data('type') == "form") {
+                if ($this.data('type') === "form") {
                     $($this.data('form')).submit();
                     return;
                 }
@@ -1352,7 +1394,7 @@ $(document).ready(function () {
             if (headers[val] > 0) {
                 name = val + '-' + headers[val];
             }
-            if (headers[val] == undefined) {
+            if (headers[val] === undefined) {
                 headers[val] = 1;
             } else {
                 headers[val] += 1;
@@ -1376,6 +1418,8 @@ $(document).ready(function () {
     initWebhook();
     initAdmin();
     initCodeView();
+    initCommitView();
+    
 
     // Repo clone url.
     if ($('#repo-clone-url').length > 0) {
@@ -1428,7 +1472,7 @@ function selectRange($list, $select, $from) {
         var a = parseInt($select.attr('rel').substr(1));
         var b = parseInt($from.attr('rel').substr(1));
         var c;
-        if (a != b) {
+        if (a !== b) {
             if (a > b) {
                 c = a;
                 a = b;
@@ -1448,6 +1492,8 @@ function selectRange($list, $select, $from) {
 }
 
 $(function () {
-    if ($('.user.signin').length > 0) return;
+    if ($('.user.signin').length > 0) { 
+    return;
+    }
     $('form').areYouSure();
 });

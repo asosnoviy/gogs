@@ -1354,8 +1354,15 @@ footer .ui.language .menu {
 .repository.file.list #file-content .code-view .lines-num ol li.active,
 .repository.file.list #file-content .code-view .lines-code ol li.active,
 .repository.file.list #file-content .code-view .lines-num .hljs li.active,
-.repository.file.list #file-content .code-view .lines-code .hljs li.active {
+.repository.file.list #file-content .code-view .lines-code .hljs li.active{
   background: #ffffdd;
+}
+.repository .diff-file-box .code-diff tbody tr.add-code td, .repository .diff-file-box .code-diff tbody tr.active,
+.repository .diff-file-box .code-diff tbody tr.add-code td, .repository .diff-file-box .code-diff tbody tr.active td.lines-num,
+.repository .diff-file-box .code-diff tbody tr.add-code td, .repository .diff-file-box .code-diff tbody tr.active td.lines-code, 
+.repository .diff-file-box .code-diff tbody tr.add-code td, .repository .diff-file-box .code-diff tbody tr.active td span,
+.repository .diff-file-box .code-diff tbody tr.add-code td, .repository .diff-file-box .code-diff tbody tr.active td pre code {
+  background: #ffffdd !important;
 }
 .repository.file.list #file-content .code-view .lines-num pre li:before,
 .repository.file.list #file-content .code-view .lines-code pre li:before,
@@ -1949,7 +1956,10 @@ footer .ui.language .menu {
   color: #A7A7A7;
   background: #fafafa;
   width: 1%;
+  /*lab*/
+  cursor: pointer;
 }
+
 .repository .diff-file-box .file-body.file-code .lines-num span.fold {
   display: block;
   text-align: center;
